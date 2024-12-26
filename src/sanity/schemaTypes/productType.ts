@@ -46,7 +46,7 @@ export const productType = defineType({
       name: "categories",
       title: "Categories",
       type: "array",
-      of: [{type: "reference", to: {type: "cateogry"}}],
+      of: [{type: "reference", to: {type: "category"}}],
     }),
     defineField({
       name: "stock",
@@ -58,7 +58,7 @@ export const productType = defineType({
   preview: {
     select: {
       title: "name",
-      subtitle: "price",
+      price: "price",
       media: "image",
     },
     prepare({title, price, media}) {
