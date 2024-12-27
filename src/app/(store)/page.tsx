@@ -19,7 +19,6 @@ export default async function Home() {
       <div>
         <ProductsView products={products} categories={categories} />
       </div>
-      <Button>Click me</Button>
-    </div>
+   </div>
   );
 }

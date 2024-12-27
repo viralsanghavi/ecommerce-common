@@ -357,6 +357,74 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   stock?: number;
 }>;
 
+// Source: ./src/sanity/products/getProductBySlug.ts
+// Variable: PRODUCT_BY_ID_QUERY
+// Query: *[_type == "products" && slug.current == $slug ]         | order(name asc)[0]
+export type PRODUCT_BY_ID_QUERYResult = null;
+
+// Source: ./src/sanity/products/searchProductsByName.ts
+// Variable: searchProductByQuery
+// Query: *[_type=="product" && name match $searchParam]| order(name asc)
+export type SearchProductByQueryResult = Array<{
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  price?: number;
+  categories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  stock?: number;
+}>;
+
 // Source: ./src/sanity/sales/getActiveSaleByCouponCode.ts
 // Variable: ACTIVE_SALE_BY_COUPON_QUERY
 // Query: *[            _type=="sale"        && isActive == true        && couponCode == $couponCode        ] | order(validFrom desc)[0]
@@ -381,6 +449,8 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n        *[_type==\"category\"]| order(name asc)": ALL_CATEGORIES_QUERYResult;
     "\n        *[_type == \"product\"] | order(name asc)\n        ": ALL_PRODUCTS_QUERYResult;
+    "\n        *[_type == \"products\" && slug.current == $slug ] \n        | order(name asc)[0]\n        ": PRODUCT_BY_ID_QUERYResult;
+    "\n        *[_type==\"product\" && name match $searchParam]| order(name asc)\n        ": SearchProductByQueryResult;
     "\n        *[\n            _type==\"sale\"\n        && isActive == true\n        && couponCode == $couponCode\n        ] | order(validFrom desc)[0]\n\n        ": ACTIVE_SALE_BY_COUPON_QUERYResult;
   }
 }
