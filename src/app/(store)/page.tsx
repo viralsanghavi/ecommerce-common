@@ -1,9 +1,10 @@
 import BlackFridayBanner from "@/components/BlackFridayBanner";
 import ProductsView from "@/components/ProductsView";
-import {Button} from "@/components/ui/button";
-import {getAllCategories} from "@/sanity/categories/getAllCategories";
-import {getAllProducts} from "@/sanity/products/getAllProducts";
+import { getAllCategories } from "@/sanity/categories/getAllCategories";
+import { getAllProducts } from "@/sanity/products/getAllProducts";
 
+export const dynamic = "force-static";
+export const revalidate = 60;
 export default async function Home() {
   const products = await getAllProducts();
   const categories = await getAllCategories();
@@ -19,6 +20,6 @@ export default async function Home() {
       <div>
         <ProductsView products={products} categories={categories} />
       </div>
-   </div>
+    </div>
   );
 }

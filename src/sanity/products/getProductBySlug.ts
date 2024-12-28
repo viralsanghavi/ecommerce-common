@@ -3,7 +3,7 @@ import {sanityFetch} from "../lib/live";
 
 export const getProductBySlug = async (slug: string) => {
   const PRODUCT_BY_ID_QUERY = defineQuery(`
-        *[_type == "products" && slug.current == $slug ] 
+        *[_type == "product" && slug.current == $slug ] 
         | order(name asc)[0]
         `);
   try {
@@ -13,7 +13,7 @@ export const getProductBySlug = async (slug: string) => {
         slug,
       },
     });
-    return product.data || [];
+    return product.data || null;
   } catch (error) {
     console.error("Error Fetching product by ID:", error);
     return null;

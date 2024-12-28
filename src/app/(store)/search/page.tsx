@@ -2,10 +2,14 @@ import ProductsGrid from "@/components/ProductsGrid";
 import {searchProductsByName} from "@/sanity/products/searchProductsByName";
 import React from "react";
 
-async function SearchPage({searchParams}: {searchParams: {query: string}}) {
+async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{query: string}>;
+}) {
   const {query} = await searchParams;
   const products = await searchProductsByName(query);
-  console.log(products)
+  console.log(products);
   if (!products.length)
     return (
       <div className="flex flex-col items-center justify-top min-h-screen bg-gray-100 p-4">

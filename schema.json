@@ -453,7 +453,7 @@
         },
         "optional": true
       },
-      "stripCheckoutSessionId": {
+      "stripeCheckoutSessionId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

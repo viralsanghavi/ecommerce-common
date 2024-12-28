@@ -11,13 +11,17 @@ import Link from "next/link";
 import Form from "next/form";
 import React from "react";
 import {PackageIcon, TrolleyIcon} from "@sanity/icons";
+import useBasketStore from "../../store/store";
 
 const Header = () => {
   const {user} = useUser();
+  const itemCount = useBasketStore((state) =>
+    state.items.reduce((total, item) => total + item.quantity, 0)
+  );
 
   const createClerkPasskey = async () => {
     try {
-      const response = await user?.createPasskey();
+      await user?.createPasskey();
     } catch (error) {
       console.error("Error is ", JSON.stringify(error, null, 2));
     }
@@ -30,7 +34,7 @@ const Header = () => {
           href="/"
           className="text-2xl font-bold text-blue-500 hover:opacity-50 cursor-pointer mx-auto sm:mx-0"
         >
-          Shopr
+          Noerr
         </Link>
         <Form
           action="/search"
@@ -58,13 +62,16 @@ const Header = () => {
           >
             <TrolleyIcon className="w-6 h-6" />
             {/* TODO! Span ITEM count once global state is implemented */}
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 items-center flex justify-center text-xs">
+              {itemCount}
+            </span>
             <span>My Basket</span>
           </Link>
           {/* User area */}
           <ClerkLoaded>
             <SignedIn>
               <Link
-                href="/order"
+                href="/orders"
                 className="flex-1 relative flex justify-center sm:justify-start sm:flex-none items-center space-x-2 bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
               >
                 <PackageIcon className="w-6 h-6" />
